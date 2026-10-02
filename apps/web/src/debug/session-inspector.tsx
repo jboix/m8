@@ -32,11 +32,21 @@ const MARKERS = /<[^>]*>|\{[^}]*\}/g;
 /**
  * Drop the transcriber's commentary from a line.
  *
+ * @remarks
+ * The removal repeats until nothing changes, so no marker can survive however
+ * the markers are nested. The line is shown as text, never as HTML.
+ *
  * @param text - The assembled line.
  * @returns What was actually said, which can be nothing at all.
  */
-function spoken(text: string): string {
-  return text.replace(MARKERS, '').trim();
+export function spoken(text: string): string {
+  let before: string;
+  let after = text;
+  do {
+    before = after;
+    after = before.replace(MARKERS, '');
+  } while (after !== before);
+  return after.trim();
 }
 
 /**
