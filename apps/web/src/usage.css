@@ -1,0 +1,211 @@
+/* The usage section of the settings: the range buttons, four tiles, the cost
+   chart and the table by model. The rows and hints come from settings.css. */
+
+/* The usage tab is one column, not a card: the tiles are its cards. */
+.m8-settings section.m8-usage {
+  /* The two series. Checked against the sheet surface for contrast and for
+     colour-blind separation. Text never takes these colours. */
+  --usage-conversation: #2a8fd6;
+  --usage-memory: #d95926;
+  --usage-hint: #6b7f8d;
+
+  gap: 1rem;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.m8-usage-ranges {
+  display: flex;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  gap: 0.4rem;
+  border: none;
+}
+
+.m8-usage-ranges .m8-setting-button {
+  flex: 1;
+  padding: 0.45rem 0.5rem;
+}
+
+.m8-usage-ranges .m8-setting-button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--accent);
+}
+
+.m8-usage-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+
+.m8-usage-tile {
+  display: flex;
+  min-width: 0;
+  padding: 0.75rem 0.85rem;
+  flex-direction: column;
+  gap: 0.2rem;
+  border: 1px solid var(--card-edge);
+  border-radius: 0.85rem;
+  background: var(--card);
+}
+
+.m8-usage-tile-label,
+.m8-usage-tile-detail {
+  color: var(--usage-hint);
+  font-size: 0.78rem;
+}
+
+.m8-usage-tile-value {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+.m8-usage-chart {
+  margin: 0;
+}
+
+.m8-usage-legend {
+  display: flex;
+  margin-bottom: 0.3rem;
+  gap: 1rem;
+  color: var(--ink);
+  font-size: 0.78rem;
+}
+
+.m8-usage-key::before {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  margin-right: 0.35rem;
+  border-radius: 2px;
+  vertical-align: -0.05rem;
+  content: "";
+}
+
+.m8-usage-key-conversation::before {
+  background: var(--usage-conversation);
+}
+
+.m8-usage-key-memory::before {
+  background: var(--usage-memory);
+}
+
+.m8-usage-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.m8-usage-conversation {
+  fill: var(--usage-conversation);
+}
+
+.m8-usage-memory {
+  fill: var(--usage-memory);
+}
+
+.m8-usage-grid {
+  stroke: var(--chrome-edge);
+  stroke-width: 1;
+}
+
+/* The axis numbers keep the character's monospace, as the chart was drawn. */
+.m8-usage-label {
+  fill: var(--usage-hint);
+  font-family: var(--mono);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The hit targets and the tooltip are placed over the drawing. */
+.m8-usage-plot {
+  position: relative;
+}
+
+/* A hit target is invisible until it is hovered or has focus. */
+.m8-usage-hit {
+  position: absolute;
+  padding: 0;
+  border: none;
+  border-radius: 2px;
+  background: transparent;
+  cursor: default;
+}
+
+.m8-usage-hit:hover,
+.m8-usage-hit:focus-visible {
+  background: rgb(207 230 245 / 6%);
+}
+
+.m8-usage-hit:focus-visible {
+  outline: 1px solid var(--accent);
+}
+
+.m8-usage-tooltip {
+  position: absolute;
+  top: 0;
+  display: flex;
+  padding: 0.4rem 0.55rem;
+  flex-direction: column;
+  gap: 0.1rem;
+  border: 1px solid var(--chrome-edge);
+  border-radius: 0.4rem;
+  background: var(--chrome);
+  color: var(--ink);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* The table scrolls on its own when a model name is long, not the sheet. */
+.m8-usage-table {
+  overflow-x: auto;
+}
+
+.m8-usage-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.m8-usage-table th {
+  color: var(--usage-hint);
+  font-weight: 600;
+  text-align: left;
+}
+
+.m8-usage-table th,
+.m8-usage-table td {
+  padding: 0.3rem 0.25rem;
+  border-bottom: 1px solid var(--chrome-edge);
+  vertical-align: top;
+}
+
+.m8-usage-table th:nth-child(n + 2),
+.m8-usage-number {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* The model, under what it was used for: one column instead of two. */
+.m8-usage-model {
+  display: block;
+  color: var(--usage-hint);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  overflow-wrap: anywhere;
+}
+
+.m8-usage-turns {
+  display: block;
+  color: var(--usage-hint);
+}

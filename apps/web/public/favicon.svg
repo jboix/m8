@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <title>m8</title>
+  <defs>
+    <linearGradient id="eye" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#a8f4ff"/><stop offset=".45" stop-color="#38cdff"/><stop offset="1" stop-color="#0a7fdc"/>
+    </linearGradient>
+    <filter id="bloom" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="26"/></filter>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="#04070c"/>
+  <g transform="translate(256 262) scale(.82)">
+    <g filter="url(#bloom)" opacity=".75" fill="#38cdff"><path transform="translate(-134 0)" d="M 0 -118 C 68.4 -118 90 -89.7 90 0 C 90 89.7 68.4 118 0 118 C 0 118 0 118 0 118 C 0 118 0 118 0 118 C -68.4 118 -90 89.7 -90 0 C -90 -89.7 -68.4 -118 0 -118 Z"/><path transform="translate(134 0)" d="M 0 -118 C 68.4 -118 90 -89.7 90 0 C 90 89.7 68.4 118 0 118 C 0 118 0 118 0 118 C 0 118 0 118 0 118 C -68.4 118 -90 89.7 -90 0 C -90 -89.7 -68.4 -118 0 -118 Z"/></g>
+    <g transform="translate(-134 0)"><path d="M 0 -118 C 68.4 -118 90 -89.7 90 0 C 90 89.7 68.4 118 0 118 C 0 118 0 118 0 118 C 0 118 0 118 0 118 C -68.4 118 -90 89.7 -90 0 C -90 -89.7 -68.4 -118 0 -118 Z" fill="url(#eye)"/><rect x="-42" y="-100" width="46" height="13" rx="6.5" fill="#eafcff" opacity=".55"/></g><g transform="translate(134 0)"><path d="M 0 -118 C 68.4 -118 90 -89.7 90 0 C 90 89.7 68.4 118 0 118 C 0 118 0 118 0 118 C 0 118 0 118 0 118 C -68.4 118 -90 89.7 -90 0 C -90 -89.7 -68.4 -118 0 -118 Z" fill="url(#eye)"/><rect x="-42" y="-100" width="46" height="13" rx="6.5" fill="#eafcff" opacity=".55"/></g>
+  </g>
+</svg>

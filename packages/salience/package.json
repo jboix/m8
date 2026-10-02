@@ -1,0 +1,10 @@
+{
+  "name": "@m8/salience",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Leaky integrate-and-fire salience filter with habituation. Pure TypeScript, no dependencies.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}

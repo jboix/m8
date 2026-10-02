@@ -1,0 +1,157 @@
+/* The setup screen. The eyes keep their one cell for the life of the tab; setup
+   only makes that cell a strip at the top, and the card takes what is under it.
+   Finishing lets the cell grow back, and the stage refits as it goes. */
+
+:root {
+  /* The same number as LEAVE_MS in setup/use-setup.ts. */
+  --setup-leave: 900ms;
+  --setup-strip: 34%;
+}
+
+.m8-stage-cell {
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+  transition: height var(--setup-leave) cubic-bezier(0.22, 0.9, 0.24, 1);
+}
+
+.m8-app[data-setup="asking"] .m8-stage-cell {
+  height: var(--setup-strip);
+}
+
+.m8-setup {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  inset: var(--setup-strip) 0 0 0;
+  padding: 0.5rem 1.25rem calc(1.5rem + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  transition:
+    opacity 280ms ease-out,
+    transform 280ms ease-out;
+}
+
+.m8-setup[data-leaving="true"] {
+  opacity: 0;
+  transform: translateY(1.5rem);
+}
+
+.m8-setup form {
+  display: contents;
+}
+
+.m8-setup-ask {
+  margin: 0;
+  font-size: clamp(1.05rem, 2.6vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-align: center;
+}
+
+.m8-setup-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  width: min(100%, 34rem);
+}
+
+.m8-setup-card {
+  /* Five cards wrap to three and two, or two, two and one, centred either way. */
+  flex: 0 1 10rem;
+}
+
+.m8-setup button,
+.m8-setup-name {
+  border: 1px solid var(--chrome-edge);
+  border-radius: 0.5rem;
+  background: var(--chrome);
+  color: var(--ink);
+  font: inherit;
+}
+
+.m8-setup button {
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+}
+
+.m8-setup button:hover:not(:disabled),
+.m8-setup button:focus-visible,
+.m8-setup-name:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.m8-setup-card {
+  font-size: 1.05rem;
+}
+
+.m8-setup-card[aria-checked="true"] {
+  border-color: var(--accent);
+  box-shadow: 0 0 1.2rem rgb(56 205 255 / 22%);
+  color: var(--accent);
+}
+
+.m8-setup-name {
+  width: min(100%, 24rem);
+  padding: 0.85rem 1rem;
+  /* Sixteen pixels or more, or iOS zooms the page when the field is focused. */
+  font-size: max(1rem, 16px);
+  text-align: center;
+}
+
+/* Read before the button that wakes him: camera frames go to the provider. */
+.m8-setup-disclosure {
+  width: min(100%, 28rem);
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  text-align: center;
+  opacity: 0.7;
+}
+
+.m8-setup-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+
+.m8-setup button.m8-setup-go {
+  min-width: 9rem;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--panel);
+  font-weight: 600;
+}
+
+.m8-setup button:disabled {
+  cursor: default;
+  opacity: 0.35;
+}
+
+/* The Gemini step's two model pickers: the settings rows, in a column the width of the field. */
+.m8-setup-models {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.7rem;
+  width: min(100%, 28rem);
+}
+
+.m8-setup-models .m8-setup-ask,
+.m8-setup-models .m8-setup-actions {
+  align-self: center;
+}
+
+.m8-setup-models .m8-setup-actions {
+  margin-top: 0.6rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m8-stage-cell,
+  .m8-setup {
+    transition: none;
+  }
+}

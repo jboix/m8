@@ -1,0 +1,256 @@
+/**
+ * The rig's lists, laid out like the DevTools console: a toolbar, then one
+ * dense monospace row per entry with a hairline between rows. The event log,
+ * the tool calls, the transcript and its prompt, and the memory lists.
+ */
+
+/* A console toolbar: grey, one row high, with a hairline under it. */
+.m8-debug .m8-toolbar {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  min-height: 26px;
+  padding: 2px 4px;
+  border-bottom: 1px solid var(--dt-line);
+  background: var(--dt-toolbar);
+}
+
+.m8-debug .m8-filter {
+  flex: 1 1 8rem;
+}
+
+.m8-debug .m8-count {
+  padding: 0 4px;
+  color: var(--dt-dim);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* A toolbar icon: no border, grey until hovered. */
+.m8-debug button.m8-icon-button {
+  display: grid;
+  width: 24px;
+  padding: 0;
+  place-items: center;
+  border: none;
+  background: none;
+  color: var(--dt-dim);
+}
+
+.m8-debug button.m8-icon-button:hover {
+  background: var(--dt-raised);
+  color: var(--dt-text);
+}
+
+.m8-debug .m8-icon-button svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.4;
+}
+
+/* Present for a screen reader, absent on screen. */
+.m8-debug .m8-hidden-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The type switches, like the type filters of the network panel. */
+.m8-debug .m8-type-filters {
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px 4px;
+}
+
+.m8-debug .m8-type-filters button {
+  min-height: 18px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 3px;
+  font-size: 11px;
+  line-height: 18px;
+}
+
+/* A shown type is a grey pill and a hidden one is plain grey text, so a row of
+   fourteen does not turn the toolbar blue. */
+.m8-debug .m8-type-filters button.m8-pin-on {
+  background: var(--dt-raised);
+  color: var(--dt-text);
+}
+
+.m8-debug .m8-type-filters button.m8-chip-off {
+  background: none;
+  color: var(--dt-faint);
+}
+
+.m8-debug .m8-type-filters button:hover {
+  background: var(--dt-line-strong);
+  color: var(--dt-text);
+}
+
+/* The log rows. Dense on purpose: the log is read by scanning, and the thing
+   you are looking for is a rhythm. */
+.m8-debug .m8-timeline,
+.m8-debug .m8-transcript {
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  border: none;
+  border-radius: 0;
+  background: var(--dt-bg);
+  font: 11px / 16px var(--dt-mono);
+  list-style: none;
+  user-select: text;
+}
+
+.m8-debug .m8-timeline {
+  max-height: max(22rem, 60svh);
+}
+
+.m8-debug .m8-transcript {
+  max-height: 14rem;
+}
+
+.m8-debug .m8-timeline li {
+  display: grid;
+  grid-template-columns: 7ch 17ch 1fr;
+  gap: 8px;
+  padding: 1px 8px;
+  border-bottom: 1px solid var(--dt-row-line);
+  white-space: nowrap;
+}
+
+/* A row of two, such as a boredom fire, gives its text the rest of the line. */
+.m8-debug .m8-timeline li > :nth-child(2):last-child {
+  grid-column: 2 / -1;
+}
+
+.m8-debug .m8-timeline .m8-empty {
+  display: block;
+  color: var(--dt-dim);
+}
+
+.m8-debug .m8-age {
+  color: var(--dt-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.m8-debug .m8-timeline .m8-age {
+  text-align: right;
+}
+
+.m8-debug .m8-kind {
+  overflow: hidden;
+  color: var(--dt-key);
+  text-overflow: ellipsis;
+}
+
+.m8-debug .m8-detail {
+  overflow: hidden;
+  color: var(--dt-dim);
+  text-overflow: ellipsis;
+}
+
+.m8-debug .m8-timeline .m8-detail {
+  color: var(--dt-text);
+}
+
+/* A boredom fire that was dropped. */
+.m8-debug .m8-timeline .m8-age + .m8-detail {
+  color: var(--dt-dim);
+}
+
+/* A note with nothing to show, such as an empty memory. */
+.m8-debug p.m8-detail {
+  margin: 0;
+  padding: 4px 8px;
+}
+
+/* An error, as the console marks one: red text after a red cross. */
+.m8-debug .m8-fault {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  color: var(--dt-error);
+}
+
+.m8-debug .m8-fault::before {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background:
+    var(--dt-error)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M4 4l4 4M8 4l-4 4' stroke='%23202124' stroke-width='1.5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
+  content: "";
+}
+
+/* The transcript: what he heard after a ">", what he said after a "<", as the
+   console shows what was typed and what came back. */
+.m8-debug .m8-transcript li {
+  position: relative;
+  padding: 2px 8px;
+  border-bottom: 1px solid var(--dt-row-line);
+  color: var(--dt-dim);
+  overflow-wrap: anywhere;
+}
+
+.m8-debug .m8-transcript li.m8-said {
+  color: var(--dt-text);
+}
+
+.m8-debug .m8-chat li {
+  padding-left: 22px;
+}
+
+.m8-debug .m8-chat li::before {
+  position: absolute;
+  left: 9px;
+  color: var(--dt-faint);
+  content: "\203A";
+}
+
+.m8-debug .m8-chat li.m8-said::before {
+  content: "\2039";
+}
+
+/* Memory rows are prose with a button, so they keep the transcript's rows. */
+.m8-debug .m8-memory-list li {
+  padding: 3px 8px;
+}
+
+/* The typing line under the transcript, after a blue chevron like the console prompt. */
+.m8-debug .m8-prompt {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 3px 8px 3px 22px;
+  border-bottom: 1px solid var(--dt-line);
+  background: var(--dt-bg);
+}
+
+.m8-debug .m8-prompt::before {
+  position: absolute;
+  left: 8px;
+  width: 5px;
+  height: 5px;
+  transform: rotate(-45deg);
+  border-right: 1.5px solid var(--dt-accent);
+  border-bottom: 1.5px solid var(--dt-accent);
+  content: "";
+}
+
+.m8-debug .m8-prompt .m8-say {
+  flex: 1;
+  padding: 0;
+  border: none;
+  background: none;
+  font: 12px var(--dt-mono);
+}

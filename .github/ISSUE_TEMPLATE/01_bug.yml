@@ -1,0 +1,62 @@
+name: 🐛 Bug Report
+description: Report a possible bug or regression
+title: "🐛 <TITLE>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a bug. Please provide a clear and concise
+        description of what the bug is; reports that cannot be reproduced
+        take much longer to fix.
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment information
+      description: >
+        Paste the m8 commit, `bun --version`, and the browser and device
+        (with OS version) where the bug occurs. If the bug involves the live
+        session, state the conversation and memory models from the Gemini tab
+        of the settings. Review the output for anything sensitive before
+        posting: never paste your Gemini key, your access key, or anything
+        from `data/` or `keys/`.
+      value: |
+        <details>
+
+        ```
+        Paste output here
+        ```
+
+        </details>
+    validations:
+      required: true
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: What happened?
+      description: >
+        Provide the steps that reproduce the issue, including the settings
+        that matter and, if possible, a recording from the rig's log tab. The
+        more complete the steps, the quicker the report can be triaged and
+        addressed.
+      placeholder: |
+        1.
+        2.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-result
+    attributes:
+      label: Expected result
+      description: Describe what you expected to happen.
+      placeholder: He should look at the person who started talking.
+    validations:
+      required: true
+  - type: checkboxes
+    id: coc
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/jboix/m8/blob/main/docs/CODE_OF_CONDUCT.md)
+      options:
+        - label: I agree to follow m8's Code of Conduct
+          required: true

@@ -1,0 +1,24 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      dev-tooling:
+        patterns:
+          - '@biomejs/*'
+          - '@commitlint/*'
+          - dependency-cruiser
+          - knip
+          - husky
+    ignore:
+      # dependency-cruiser cannot parse TypeScript 7 and silently cruises zero
+      # modules, so the architecture gate would pass while checking nothing.
+      - dependency-name: typescript
+        update-types: ['version-update:semver-major']
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly

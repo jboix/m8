@@ -1,0 +1,325 @@
+/* The stage is a cheap display: a dark panel, a faint grid, and scanlines over
+   everything. The character is the only thing on it that is lit. */
+:root {
+  --panel: #04070c;
+  --panel-glow: #081420;
+  --grid: rgb(72 190 235 / 5.5%);
+  --grid-major: rgb(72 190 235 / 9%);
+  --eye: #38cdff;
+  --ink: #cfe6f5;
+  --chrome: #0a1017;
+  --chrome-edge: #1b2c3d;
+  --accent: #38cdff;
+  /* The character's voice in type: headings, numbers, ids. */
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, monospace;
+  /* What a person reads and changes in the settings. */
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  /* Grid pitch. One cell is the smallest thing the screen can address. */
+  --cell: 26px;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: var(--panel);
+  color: var(--ink);
+  font-family: var(--mono);
+  overflow: hidden;
+}
+
+/* The stage and the panel are grid cells, not a page with an overlay on it.
+   Opening the panel shrinks the stage, and the character refits into what is
+   left rather than hiding behind it. */
+.m8-app {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  height: 100%;
+  isolation: isolate;
+}
+
+/* The rig docks beside the stage or under it, the way DevTools does. Its
+   resize bar sets --rig-size; until it is dragged the rig has its default size. */
+.m8-app[data-panel="rig"] {
+  grid-template-columns: 1fr var(--rig-size, min(30rem, 42vw));
+}
+
+@media (width > 40rem) {
+  .m8-app[data-panel="rig"][data-dock="bottom"] {
+    grid-template-rows: minmax(0, 1fr) var(--rig-size, 40svh);
+    grid-template-columns: 1fr;
+  }
+}
+
+.m8-app[data-panel="settings"] {
+  grid-template-columns: 1fr min(26rem, 42vw);
+}
+
+/* Phones: the panel is a sheet under the stage, not a column beside it. This
+   has to follow the rules above. It lived in instruments.css, which loads first,
+   so the column won and a phone got a sliver of stage beside a cramped panel. */
+@media (width <= 40rem) {
+  .m8-app[data-panel] {
+    grid-template-rows: minmax(9rem, 1fr) auto;
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The panel: a grid, a coarser grid every fifth line, and a glow behind the
+   character so the display looks lit from within rather than printed. */
+.m8-app::before {
+  /* Spanning every track, because an absolutely positioned child of a grid gets
+     sized to its grid area, and the panel's column would otherwise cut the
+     panel off halfway across the screen. */
+  position: absolute;
+  z-index: -2;
+  grid-area: 1 / 1 / -1 / -1;
+  inset: 0;
+  /* The glow is the last layer, so it sits under the grid. A panel is lit from
+     behind its pixels, not in front of them. */
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px),
+    radial-gradient(70% 58% at 50% 46%, var(--panel-glow) 0%, transparent 72%);
+  background-size:
+    calc(var(--cell) * 5) calc(var(--cell) * 5),
+    calc(var(--cell) * 5) calc(var(--cell) * 5),
+    var(--cell) var(--cell),
+    var(--cell) var(--cell),
+    100% 100%;
+  background-position: center;
+  content: "";
+}
+
+/* Scanlines, over the character as well as the grid, because on a real panel
+   the character is made of the same pixels as everything else. */
+.m8-app::after {
+  position: absolute;
+  z-index: 1;
+  grid-area: 1 / 1 / -1 / -1;
+  inset: 0;
+  background: repeating-linear-gradient(rgb(0 0 0 / 26%) 0 1px, transparent 1px 3px);
+  content: "";
+  pointer-events: none;
+}
+
+/* The character */
+
+.m8-stage {
+  /* Both zeroes let the cell shrink below the SVG's intrinsic size. */
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  min-height: 0;
+}
+
+.m8-eye {
+  fill: url(#m8-eye);
+}
+
+.m8-glow {
+  fill: var(--eye);
+}
+
+.m8-highlight {
+  fill: #eafcff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Scanlines on a still image are texture; on a moving one they are strobe. */
+  .m8-app::after {
+    opacity: 0.4;
+  }
+}
+
+/* Flourishes. All of them rest at opacity 0; the writer shows them. */
+
+.m8-star {
+  fill: #fffbe6;
+}
+
+/* A glare, like the star: the highlight's own colour, where the highlight is. */
+.m8-question {
+  fill: none;
+  stroke: #fffbe6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 12;
+}
+
+.m8-question circle {
+  fill: #fffbe6;
+  stroke: none;
+}
+
+/* A glare too, heavier than the question mark: a shock is louder than a doubt. */
+.m8-exclamation {
+  fill: #fffbe6;
+}
+
+.m8-blush ellipse {
+  fill: #ff4f86;
+  opacity: 0.5;
+}
+
+.m8-blush path {
+  fill: none;
+  stroke: #ff86ad;
+  stroke-linecap: round;
+  stroke-width: 7;
+}
+
+.m8-tear {
+  fill: #c9f1ff;
+}
+
+/* Paler than the tear, with an edge, so it reads as sweat on the skin. */
+.m8-sweat {
+  fill: rgb(201 241 255 / 55%);
+  stroke: #c9f1ff;
+  stroke-width: 3;
+}
+
+.m8-bubble {
+  fill: rgb(190 238 255 / 12%);
+  stroke: #bfeeff;
+  stroke-width: 3;
+}
+
+.m8-dot {
+  fill: #cfefff;
+}
+
+/* The person's own controls: camera off, mute, and the settings. On the stage,
+   not in the rig, because the rig is for debugging and these are for whoever
+   he is talking to. A column in the bottom right corner, under the thumb on a
+   phone. Dim until wanted, and warm when something is off, so off is never
+   missed. */
+
+.m8-controls {
+  position: absolute;
+  z-index: 2;
+  right: calc(1rem + env(safe-area-inset-right));
+  bottom: calc(1rem + env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.m8-control {
+  display: grid;
+  width: 2.9rem;
+  height: 2.9rem;
+  padding: 0;
+  place-items: center;
+  border: 1px solid var(--chrome-edge);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--chrome) 80%, transparent);
+  color: #5f8197;
+  cursor: pointer;
+}
+
+.m8-control svg {
+  width: 1.35rem;
+  height: 1.35rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.m8-control:hover,
+.m8-control:focus-visible {
+  border-color: var(--accent);
+  outline: none;
+  color: var(--accent);
+}
+
+.m8-control[data-off="true"] {
+  border-color: #ff6b5e;
+  background: rgb(255 90 78 / 14%);
+  color: #ff8b80;
+}
+
+.m8-control-slash {
+  stroke-width: 2.1;
+}
+
+/* The talk button: the biggest thing on the stage after the eyes, because it
+   is used for every sentence. Held, not clicked, so the browser must not
+   scroll, select or open a menu on a long press. Lit while held, so a turn
+   left open is never missed. --voice is the person's level, 0 to 1, written
+   by the button itself: it grows and lifts with their voice while held. */
+
+.m8-talk {
+  --voice: 0;
+
+  position: absolute;
+  z-index: 2;
+  bottom: calc(1.5rem + env(safe-area-inset-bottom));
+  left: 50%;
+  display: grid;
+  width: 5.5rem;
+  height: 5.5rem;
+  padding: 0;
+  place-items: center;
+  transform: translate(-50%, calc(var(--voice) * -0.25rem)) scale(calc(1 + var(--voice) * 0.12));
+  transition:
+    transform 90ms ease-out,
+    background-color 120ms ease-out;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--accent) 16%, var(--chrome));
+  box-shadow: 0 0 calc(1.2rem + var(--voice) * 1rem)
+    color-mix(in srgb, var(--accent) 35%, transparent);
+  color: var(--accent);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+}
+
+.m8-talk svg {
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+
+.m8-talk:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.m8-talk[data-held="true"] {
+  background: color-mix(in srgb, var(--accent) 45%, var(--chrome));
+  color: #fff;
+}
+
+/* Clear of the talk button when there is one. */
+.m8-app:has(.m8-talk) .m8-fault-line {
+  bottom: calc(8.5rem + env(safe-area-inset-bottom));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .m8-talk {
+    transform: translateX(-50%);
+  }
+}

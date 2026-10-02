@@ -1,0 +1,222 @@
+/**
+ * The instruments: the self-model diff, the salience graph, the mood dials and
+ * the camera preview, and how the rig's rows fit a phone and a finger. The
+ * colours are the rig's, from debug.css. The lists are in debug/console.css.
+ */
+
+/* The self-model diff, coloured as the Changes panel colours one. */
+.m8-debug .m8-diff {
+  margin: 0;
+  padding: 6px 8px;
+  border: none;
+  border-bottom: 1px solid var(--dt-line);
+  border-radius: 0;
+  background: var(--dt-bg);
+  font: 11px / 1.5 var(--dt-mono);
+  user-select: text;
+}
+
+.m8-debug .m8-diff-same {
+  color: var(--dt-text);
+}
+
+.m8-debug .m8-diff-added {
+  background: rgb(129 201 149 / 15%);
+  color: var(--dt-ok);
+}
+
+.m8-debug .m8-diff-removed {
+  background: var(--dt-error-bg);
+  color: var(--dt-error);
+}
+
+/* The charge, and the line it has to cross to make the character speak. */
+.m8-debug .m8-voltage {
+  display: block;
+  width: calc(100% - 16px);
+  height: 4.5rem;
+  margin: 4px 8px;
+  border: 1px solid var(--dt-line);
+  background: var(--dt-bg);
+}
+
+.m8-debug .m8-charge {
+  fill: none;
+  stroke: var(--dt-accent);
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.m8-debug .m8-threshold {
+  stroke: var(--dt-warn);
+  stroke-dasharray: 4 4;
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.m8-debug .m8-dials {
+  display: grid;
+  padding: 2px 8px 6px;
+}
+
+.m8-debug .m8-dial {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 3rem;
+  gap: 6px;
+  align-items: center;
+  min-height: 18px;
+}
+
+.m8-debug .m8-meter {
+  height: 4px;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--dt-line);
+}
+
+.m8-debug .m8-meter div {
+  height: 100%;
+  background: var(--dt-accent);
+}
+
+/* What the camera sees, with what tier 1 made of it on top. */
+/* The preview is as wide as the rig, but no taller than half of what the rig
+   shows and never wider than 640px, so a wide rig docked under the stage does
+   not fill itself with one huge camera. `cqh` is a hundredth of the rig body's
+   height: the body is a size container, in debug.css. */
+.m8-debug .m8-preview {
+  position: relative;
+  width: min(calc(100% - 16px), calc(55cqh * 4 / 3), 640px);
+  min-width: min(calc(100% - 16px), 240px);
+  margin: 4px 8px 8px;
+  overflow: hidden;
+  border: 1px solid var(--dt-line);
+  background: #000;
+  aspect-ratio: 4 / 3;
+}
+
+.m8-debug .m8-preview video,
+.m8-debug .m8-preview svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* `fill`, not `cover`: the overlay stretches to this box, so the video has to
+     as well or the two stop lining up on a camera that is not 4:3. */
+  object-fit: fill;
+}
+
+/* Only the video is mirrored. Every coordinate tier 1 reports has already been
+   mirrored once, in the worker, so flipping the overlay too would undo it. */
+.m8-debug .m8-preview video {
+  transform: scaleX(-1);
+}
+
+.m8-debug .m8-mark-face {
+  fill: none;
+  stroke: var(--dt-dim);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+
+.m8-debug .m8-mark-face.m8-facing {
+  stroke: var(--dt-accent);
+  stroke-width: 1.4;
+}
+
+.m8-debug .m8-mark-motion {
+  fill: rgb(253 214 99 / 20%);
+  stroke: var(--dt-warn);
+  stroke-width: 0.5;
+  vector-effect: non-scaling-stroke;
+}
+
+.m8-debug .m8-preview-read {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 2px 6px;
+  background: rgb(32 33 36 / 85%);
+  font: 11px var(--dt-mono);
+}
+
+.m8-debug .m8-legend {
+  margin-left: auto;
+  color: var(--dt-dim);
+}
+
+/* Phones: the panel is a bottom sheet (sheet.css). What the rig's rows do in
+   the narrower space is here. */
+@media (width <= 40rem) {
+  .m8-sheet.m8-debug > header {
+    padding-top: 18px;
+  }
+
+  /* One line that scrolls sideways, so a row of twelve emotions is one row. */
+  .m8-debug .m8-chips.m8-chips-scroll {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .m8-debug .m8-chips-scroll button {
+    flex: none;
+  }
+
+  .m8-debug .m8-row {
+    grid-template-areas:
+      "name name name"
+      "slider value pin";
+    grid-template-columns: 1fr 3rem 3.6rem;
+    row-gap: 0;
+    margin-bottom: 4px;
+  }
+
+  .m8-debug .m8-row .m8-name {
+    grid-area: name;
+  }
+
+  .m8-debug .m8-row .m8-slider {
+    grid-area: slider;
+  }
+
+  .m8-debug .m8-row .m8-value {
+    grid-area: value;
+  }
+
+  .m8-debug .m8-row .m8-pin {
+    grid-area: pin;
+  }
+}
+
+/* Touch: fingers are not mice. Everything gets a real target. */
+@media (pointer: coarse) {
+  .m8-debug button,
+  .m8-debug button.m8-tab,
+  .m8-debug .m8-section > summary {
+    min-height: 2rem;
+  }
+
+  .m8-debug button {
+    padding: 0 10px;
+  }
+
+  .m8-debug .m8-row button,
+  .m8-debug .m8-type-filters button {
+    min-height: 1.75rem;
+  }
+
+  .m8-debug .m8-say,
+  .m8-debug .m8-pick,
+  .m8-debug .m8-filter {
+    height: 2rem;
+  }
+
+  .m8-debug .m8-slider {
+    height: 2rem;
+  }
+}

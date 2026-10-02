@@ -1,0 +1,101 @@
+/* The rig's dock: the resize bar on its inner edge and the button that moves it
+   beside the stage or under it. Loaded with the rig. */
+
+/* Docked under the stage: the edge is on top. */
+@media (width > 40rem) {
+  .m8-sheet.m8-debug[data-dock="bottom"] {
+    border-top: 1px solid var(--dt-line-strong);
+    border-left: none;
+  }
+}
+
+/* The bar on the rig's inner edge, as wide as a finger needs and drawn only
+   while it is in use, the way the DevTools splitter is. */
+.m8-rig-resizer {
+  position: absolute;
+  z-index: 2;
+  touch-action: none;
+}
+
+.m8-rig-resizer[data-dock="side"] {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6px;
+  cursor: col-resize;
+}
+
+.m8-rig-resizer[data-dock="bottom"] {
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 6px;
+  cursor: row-resize;
+}
+
+.m8-rig-resizer:hover,
+.m8-rig-resizer:focus-visible,
+:root[data-rig-resizing] .m8-rig-resizer {
+  outline: none;
+  background: linear-gradient(var(--dt-accent), var(--dt-accent)) no-repeat;
+  background-size: 2px 100%;
+}
+
+.m8-rig-resizer[data-dock="bottom"]:hover,
+.m8-rig-resizer[data-dock="bottom"]:focus-visible,
+:root[data-rig-resizing="bottom"] .m8-rig-resizer {
+  background-size: 100% 2px;
+}
+
+/* While a drag is under way, the cursor stays and nothing is selected, even
+   with the pointer over the stage. */
+:root[data-rig-resizing="side"] {
+  cursor: col-resize;
+  user-select: none;
+}
+
+:root[data-rig-resizing="bottom"] {
+  cursor: row-resize;
+  user-select: none;
+}
+
+/* The dock button: a square icon button before the close, like DevTools' own. */
+.m8-sheet.m8-debug button.m8-dock {
+  display: grid;
+  width: 28px;
+  margin: 0;
+  padding: 0;
+  place-items: center;
+  border: none;
+  background: none;
+  color: var(--dt-dim);
+  cursor: pointer;
+}
+
+.m8-sheet.m8-debug button.m8-dock:hover,
+.m8-sheet.m8-debug button.m8-dock:focus-visible {
+  outline: none;
+  background: var(--dt-raised);
+  color: var(--dt-text);
+}
+
+.m8-dock svg {
+  width: 14px;
+  height: 12px;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.2;
+}
+
+.m8-dock .m8-dock-pane {
+  fill: currentcolor;
+  stroke: none;
+}
+
+/* A phone has one place for the rig, the bottom sheet, and one size. */
+@media (width <= 40rem) {
+  .m8-rig-resizer,
+  .m8-sheet.m8-debug button.m8-dock {
+    display: none;
+  }
+}

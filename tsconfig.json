@@ -1,0 +1,26 @@
+{
+  // Base compiler options. Every workspace extends this and adds only its own
+  // lib, types and roots, so the strictness is defined in exactly one place.
+  "compilerOptions": {
+    // Environment and language level
+    "target": "ESNext",
+    "module": "Preserve",
+    "moduleDetection": "force",
+    "moduleResolution": "bundler",
+
+    // Bundler mode: nothing in this repo is compiled by tsc
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+
+    // Strictness
+    "strict": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "exactOptionalPropertyTypes": true
+  }
+}

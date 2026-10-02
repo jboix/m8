@@ -1,0 +1,368 @@
+/**
+ * The line the stage shows about the senses, and the rig's frame: its colours,
+ * its tab strip, its sections and its controls. The rig follows the Chrome
+ * DevTools dark theme, so a developer reads it the way they read DevTools.
+ * What draws data inside the rig is in instruments.css.
+ */
+
+/* The camera saying why it is not running. Quiet: the character carries on
+   without it, so this is a note, not an alarm. */
+.m8-fault-line {
+  position: absolute;
+  z-index: 2;
+  /* Clear of the controls in the bottom right, and the same on the left so it stays centred. */
+  right: calc(4.6rem + env(safe-area-inset-right));
+  bottom: calc(3.8rem + env(safe-area-inset-bottom));
+  left: calc(4.6rem + env(safe-area-inset-left));
+  margin: 0;
+  color: #6b7f8d;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* The same line when it asks for something. A person has to read this one to
+   get anywhere, so it is not whispered. */
+.m8-fault-line[data-asking="true"] {
+  color: var(--ink);
+  font-size: 0.95rem;
+}
+
+.m8-fault {
+  color: #d98b6a;
+}
+
+/* The rig's palette and type, after the DevTools dark theme. They are scoped to
+   the rig, so the stage and the settings keep their own. */
+.m8-debug {
+  --dt-bg: #202124;
+  --dt-toolbar: #292a2d;
+  --dt-raised: #35363a;
+  --dt-line: #3c4043;
+  --dt-line-strong: #494c50;
+  --dt-row-line: #313235;
+  --dt-text: #e8eaed;
+  --dt-dim: #9aa0a6;
+  --dt-faint: #6f7378;
+  --dt-accent: #8ab4f8;
+  --dt-accent-soft: rgb(138 180 248 / 16%);
+  --dt-number: #9980ff;
+  --dt-key: #c58af9;
+  --dt-ok: #81c995;
+  --dt-warn: #fdd663;
+  --dt-warn-bg: #413c26;
+  --dt-error: #f28b82;
+  --dt-error-bg: #4e3534;
+  --dt-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --dt-mono: ui-monospace, Menlo, Consolas, monospace;
+
+  color-scheme: dark;
+  color: var(--dt-text);
+  font: 12px / 1.35 var(--dt-sans);
+}
+
+/* Two classes, so these win over sheet.css whichever file loads first. */
+.m8-sheet.m8-debug {
+  border-color: var(--dt-line-strong);
+  background: var(--dt-bg);
+  backdrop-filter: none;
+}
+
+/* The tab strip: flat, one row high, with a hairline under it. */
+.m8-sheet.m8-debug > header {
+  gap: 0;
+  align-items: stretch;
+  padding: 0 0 0 4px;
+  border-bottom-color: var(--dt-line-strong);
+  background: var(--dt-toolbar);
+}
+
+.m8-sheet.m8-debug > header::before {
+  background: var(--dt-line-strong);
+}
+
+/* The body has no padding. Each block sets its own, so the headers and the
+   lists run from edge to edge as they do in DevTools. */
+.m8-sheet.m8-debug .m8-sheet-body {
+  /* Lets the camera preview size itself to what the rig shows. The body's size
+     comes from the sheet, never from its content, so containment changes nothing else. */
+  container-type: size;
+  padding: 0 0 calc(12px + env(safe-area-inset-bottom));
+}
+
+/* A square "x" at the end of the strip, like the one that closes a drawer. */
+.m8-sheet.m8-debug button.m8-close {
+  width: 28px;
+  height: auto;
+  min-height: 27px;
+  margin: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  color: var(--dt-dim);
+}
+
+.m8-sheet.m8-debug button.m8-close:hover,
+.m8-sheet.m8-debug button.m8-close:focus-visible {
+  background: var(--dt-raised);
+  color: var(--dt-text);
+}
+
+.m8-sheet.m8-debug .m8-close svg {
+  width: 10px;
+  height: 10px;
+  stroke-width: 1.5;
+}
+
+.m8-debug .m8-tabs {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+/* The open tab is blue, with a blue underline. The others are grey. */
+.m8-debug button.m8-tab {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  height: auto;
+  min-height: 27px;
+  padding: 0 10px;
+  border: none;
+  border-block: 2px solid transparent;
+  border-radius: 0;
+  background: none;
+  color: var(--dt-dim);
+  font: 12px var(--dt-sans);
+  white-space: nowrap;
+}
+
+/* Only where there is a pointer, or a tapped tab keeps the hover after the tap. */
+@media (hover: hover) {
+  .m8-debug button.m8-tab:hover {
+    background: var(--dt-raised);
+    color: var(--dt-text);
+  }
+}
+
+.m8-debug button.m8-tab[aria-selected="true"] {
+  border-bottom-color: var(--dt-accent);
+  color: var(--dt-accent);
+}
+
+.m8-debug button.m8-tab:focus-visible {
+  outline: 1px solid var(--dt-accent);
+  outline-offset: -1px;
+}
+
+/* A tab's state, as a dot: green running, yellow starting, red failed. */
+.m8-debug .m8-lamp {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dt-faint);
+}
+
+.m8-debug .m8-lamp[data-lamp="on"] {
+  background: var(--dt-ok);
+}
+
+.m8-debug .m8-lamp[data-lamp="busy"] {
+  background: var(--dt-warn);
+}
+
+.m8-debug .m8-lamp[data-lamp="fault"] {
+  background: var(--dt-error);
+}
+
+/* A pane header, as in the DevTools sidebar: a grey bar between hairlines. */
+.m8-debug .m8-label,
+.m8-debug .m8-section > summary {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 22px;
+  margin: 0;
+  padding: 2px 8px;
+  border-top: 1px solid var(--dt-line);
+  border-bottom: 1px solid var(--dt-line);
+  background: var(--dt-toolbar);
+  color: var(--dt-text);
+  font-weight: 500;
+}
+
+.m8-debug .m8-section > summary {
+  list-style: none;
+  cursor: default;
+  user-select: none;
+}
+
+.m8-debug [role="tabpanel"] > :first-child,
+.m8-debug [role="tabpanel"] > :first-child > summary {
+  border-top: none;
+}
+
+/* A folded section has no line under it. The next header draws it, unless
+   there is no next header. */
+.m8-debug .m8-section:not([open]) > summary {
+  border-bottom: none;
+}
+
+.m8-debug .m8-section:last-child:not([open]) > summary {
+  border-bottom: 1px solid var(--dt-line);
+}
+
+.m8-debug .m8-section > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The disclosure triangle. It points right when folded and down when open. */
+.m8-debug .m8-section > summary::before {
+  width: 0;
+  height: 0;
+  border-block: 4px solid transparent;
+  border-left: 5px solid var(--dt-dim);
+  content: "";
+}
+
+.m8-debug .m8-section[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+.m8-debug .m8-section > summary:hover {
+  background: var(--dt-raised);
+}
+
+.m8-debug .m8-section > summary:focus-visible {
+  outline: 1px solid var(--dt-accent);
+  outline-offset: -1px;
+}
+
+/* Buttons: small, flat, with a hairline border. */
+.m8-debug button {
+  height: auto;
+  min-height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--dt-line-strong);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--dt-text);
+  font: 12px / 20px var(--dt-sans);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.m8-debug button:hover:not(.m8-tab) {
+  background: var(--dt-raised);
+}
+
+.m8-debug button:focus-visible {
+  outline: 1px solid var(--dt-accent);
+  outline-offset: 1px;
+}
+
+/* A switch that is on: blue, as DevTools marks a toggled tool. */
+.m8-debug button.m8-pin-on {
+  border-color: rgb(138 180 248 / 45%);
+  background: var(--dt-accent-soft);
+  color: var(--dt-accent);
+}
+
+.m8-debug button.m8-pin-on:hover {
+  background: rgb(138 180 248 / 26%);
+}
+
+.m8-debug button.m8-chip-off {
+  border-color: var(--dt-line);
+  color: var(--dt-dim);
+}
+
+/* As specific as the hover rule above, so a disabled button does not light up. */
+.m8-debug button:disabled:not(.m8-tab) {
+  border-color: var(--dt-line);
+  background: none;
+  color: var(--dt-faint);
+  cursor: default;
+}
+
+/* A row of controls. */
+.m8-debug .m8-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  align-items: center;
+  padding: 4px 8px;
+}
+
+.m8-debug .m8-say,
+.m8-debug .m8-pick,
+.m8-debug .m8-filter {
+  min-width: 0;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid var(--dt-line-strong);
+  border-radius: 4px;
+  background: var(--dt-bg);
+  color: var(--dt-text);
+  font: 12px var(--dt-sans);
+}
+
+.m8-debug .m8-pick {
+  flex: 0 1 9rem;
+}
+
+.m8-debug .m8-say:focus,
+.m8-debug .m8-pick:focus,
+.m8-debug .m8-filter:focus {
+  border-color: var(--dt-accent);
+  outline: none;
+}
+
+/* The sliders, laid out like the computed styles: name, control, value. */
+.m8-debug .m8-sliders {
+  display: grid;
+  padding: 2px 8px 6px;
+}
+
+.m8-debug .m8-row {
+  display: grid;
+  grid-template-columns: 8.5rem 1fr 3rem 3.6rem;
+  gap: 6px;
+  align-items: center;
+  min-height: 22px;
+}
+
+.m8-debug .m8-name {
+  color: var(--dt-dim);
+  font: 11px var(--dt-mono);
+}
+
+.m8-debug .m8-value {
+  color: var(--dt-number);
+  font: 11px var(--dt-mono);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.m8-debug input[type="range"] {
+  width: 100%;
+  height: 14px;
+  margin: 0;
+  accent-color: var(--dt-accent);
+}
+
+/* A slider in a row of controls, such as the robot effect, takes what is left. */
+.m8-debug .m8-chips .m8-slider {
+  flex: 1 1 5rem;
+  width: auto;
+}
+
+.m8-debug .m8-row button {
+  min-height: 18px;
+  padding: 0 6px;
+  font-size: 11px;
+  line-height: 16px;
+}

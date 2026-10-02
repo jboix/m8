@@ -1,0 +1,42 @@
+/* The rig's memory tab: the self-model diff, the episodes and the facts. */
+
+/* The memory tab. Episodes and facts are prose, so they wrap where the
+   transcript's lines do, and a fact carries its own way out. */
+.m8-memory-list li {
+  padding: 0.2rem 0;
+}
+
+.m8-fact {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.m8-fact button {
+  flex: none;
+}
+
+/* The self-model diff: what was added is lit, what was removed is struck out. */
+.m8-diff {
+  margin: 0.4rem 0;
+  padding: 0.5rem 0.6rem;
+  border: 1px solid var(--chrome-edge);
+  border-radius: 6px;
+  background: #070b10;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.m8-diff-same {
+  color: #8aa8bb;
+}
+
+.m8-diff-added {
+  color: var(--accent);
+}
+
+.m8-diff-removed {
+  color: #6f4a4a;
+  text-decoration: line-through;
+}

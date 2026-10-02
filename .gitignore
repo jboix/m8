@@ -1,0 +1,49 @@
+# dependencies (bun install)
+node_modules
+
+# build output
+dist
+out
+*.tgz
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+*.log
+
+# environment
+.env
+.env.local
+.env.*.local
+
+# caches
+.cache
+*.tsbuildinfo
+
+# local data (SQLite)
+data
+
+# secrets: the key that seals the stored Gemini key
+*.pem
+keys
+
+# IntelliJ based IDEs
+.idea
+
+# VisualStudioCode
+.vscode
+.vscode-test
+.history
+
+# Finder (macOS) folder config
+.DS_Store
+
+# built from src by apps/web/scripts/vendor-workers.ts
+apps/web/public/vision
+apps/web/public/hearing
+
+# git worktrees that agents work in
+.claude/worktrees

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreExportsUsedInFile": true,
+  "workspaces": {
+    ".": {
+      "entry": [],
+      "project": []
+    },
+    "packages/shared": {},
+    "packages/salience": {},
+    "packages/persona": {},
+    "apps/server": {},
+    "apps/web": {
+      "entry": [
+        "scripts/*.ts",
+        "src/senses/vision/vision.worker.ts",
+        "src/senses/audio/ambient.worker.ts"
+      ]
+    }
+  }
+}

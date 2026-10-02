@@ -1,0 +1,10 @@
+{
+  "name": "@m8/persona",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The frozen core persona and its loader. No model ever edits this.",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  }
+}
