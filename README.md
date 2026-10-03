@@ -20,18 +20,28 @@ You need [Bun](https://bun.sh) 1.4 or later and a
 [Gemini API key](https://aistudio.google.com/apikey).
 
 ```sh
-bun install            # dependencies and git hooks
-bun run dev            # web on :3000, server on :3001
+bunx @jboix/m8 --open
 ```
 
-1. Open <http://localhost:3000>.
+1. The page opens in your browser.
 2. Paste your Gemini key. The server checks it with Gemini, stores it sealed in
    its database, and picks the newest live model and the newest text model the
    key can use. You can change either before you go on.
 3. Choose a language and enter your name.
 4. Allow the camera and the microphone.
 
-You do not need a `.env` file. `.env.example` lists the optional variables.
+His memory and keys live in `~/.m8`. You can move them with `--data <dir>`,
+and choose the port with `--port`. `bunx @jboix/m8 --help` lists the options.
+
+To work on him, clone the repository instead:
+
+```sh
+bun install            # dependencies and git hooks
+bun run dev            # web on :3000, server on :3001
+```
+
+Then open <http://localhost:3000> and follow the same steps. You do not need a
+`.env` file. `.env.example` lists the optional variables.
 
 ## What he does
 

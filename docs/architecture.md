@@ -111,6 +111,10 @@ flowchart LR
 - In production Hono serves the web build, cached and compressed, from one port:
   `bun run start`, with `--host` and `--port`. In development Vite serves the
   browser and proxies to Hono.
+- The npm package `@jboix/m8`, built by `bun run pack`, is the same server
+  bundled into one file with the web build beside it. Its `m8` launcher keeps
+  the memory and the keys in `~/.m8`, or in `--data <dir>`. The persona is
+  imported as text, so the bundle carries it.
 
 ## 4. Repository layout
 

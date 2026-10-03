@@ -52,6 +52,7 @@ bun run dev       # web on :3000 and server on :3001, together
 bun run check     # the whole gate: lint, docs, arch, knip, typecheck, test
 bun run build     # production build of both apps
 bun run start     # serve the build on one port (:3001); --host and --port like Vite
+bun run pack      # build the npm package @jboix/m8 into out/ as a tarball
 bun run lint      # Biome check
 bun run format    # Biome format --write
 bun run docs:check  # markdown formatting and links (remark)

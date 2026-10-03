@@ -53,9 +53,9 @@ module.exports = {
     {
       name: 'persona-stays-thin',
       severity: 'error',
-      comment: 'The persona package loads one file. It knows no other module.',
+      comment: 'The persona package loads one file, persona.md. It knows no other module.',
       from: { path: '^packages/persona/src/', pathNot: '\\.test\\.(ts|tsx)$' },
-      to: { path: '^(packages|apps)/', pathNot: '^packages/persona/src/' },
+      to: { path: '^(packages|apps)/', pathNot: '^packages/persona/(src/|persona\\.md$)' },
     },
     {
       name: 'shared-stays-pure',

@@ -14,6 +14,7 @@ you change how the parts connect.
 bun install        # dependencies and the git hooks
 bun run dev        # web on :3000, server on :3001
 bun run check      # everything CI checks
+bun run pack       # the npm package @jboix/m8, into out/
 ```
 
 `check` runs:
@@ -27,26 +28,17 @@ bun run check      # everything CI checks
 | `bun run typecheck`  | tsc                | Type errors, per workspace                       |
 | `bun test`           | bun:test           | Unit tests                                       |
 
-- You need Bun 1.4 or later and a Gemini API key. The README says how to give
-  the server the key.
-- Bun is the runtime, the package manager and the test runner. Do not use npm,
-  node, jest or vitest.
-- The two sense workers are built outside Vite and do not hot reload. Run
-  `bun run vendor` after you change anything they import.
+- You need Bun 1.4 or later and a Gemini API key.
+- Use Bun for everything: not npm, node, jest or vitest.
+- The two sense workers do not hot reload. Run `bun run vendor` after you
+  change anything they import.
 
 ## The debug rig
 
-The rig is the panel behind the bug button in the corner of the stage. It has
-sliders for every parameter of the eyes, the live session, the senses, his
-memory, and an event log with record and replay.
-
-- Every build includes the rig. It loads as its own chunk the first time it is
-  opened.
-- `bun run dev` always shows the bug button.
-- In a production build, you switch on Developer options in the General tab of
-  the settings to get the bug button and an Open the rig button.
-- You can dock the rig beside the stage or under it with the button next to its
-  close button, and resize it by dragging its inner edge.
+The rig shows every parameter of the eyes, the session, the senses and the
+memory, and an event log you can record and replay. `bun run dev` always shows
+its bug button on the stage. In a production build, switch on Developer options
+in the settings.
 
 ## Rules
 
@@ -92,7 +84,8 @@ See [code-style.md](./code-style.md) and
 ## Commits
 
 Conventional Commits: `type(scope): description`. Valid types are `feat`, `fix`,
-`chore`, `docs`, `refactor`, `test` and `ci`.
+`chore`, `docs`, `refactor`, `test` and `ci`. The types decide the next release:
+`fix` is a patch, `feat` a minor, a breaking change a major.
 
 `bun install` sets up the git hooks. Do not skip them.
 

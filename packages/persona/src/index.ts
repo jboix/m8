@@ -3,12 +3,10 @@
  * live session, and no model may write to it. The part of the character that
  * changes lives in SQLite instead.
  */
-import { readFile } from 'node:fs/promises';
-import { dirname, join } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-/** Where the persona lives, resolved from this module so any cwd works. */
-const PERSONA_PATH = join(dirname(dirname(fileURLToPath(import.meta.url))), 'persona.md');
+/// <reference path="./markdown.d.ts" />
+// Imported as text, so a bundle carries the persona inside it and nothing is
+// read from disk at run time.
+import PERSONA from '../persona.md' with { type: 'text' };
 
 /** What the setup screen decided, written into the persona's `{{slots}}`. */
 export interface PersonaSlots {
@@ -49,10 +47,7 @@ export function fillPersona(text: string, slots: PersonaSlots): string {
  * @param slots - The language and the name the setup screen collected.
  * @returns Its text, with the slots filled and the leading `# Core persona`
  * heading dropped: the model is being told who it is, not handed a document.
- * @throws {Error} When the file is missing, which is a broken install rather
- * than something to carry on without.
  */
 export async function loadPersona(slots: PersonaSlots): Promise<string> {
-  const text = await readFile(PERSONA_PATH, 'utf8');
-  return fillPersona(text.replace(/^#[^\n]*\n+/, '').trim(), slots);
+  return fillPersona(PERSONA.replace(/^#[^\n]*\n+/, '').trim(), slots);
 }
