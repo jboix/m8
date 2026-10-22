@@ -13,7 +13,7 @@
   "dependencies": {
     "@m8/salience": "workspace:*",
     "@m8/shared": "workspace:*",
-    "@mediapipe/tasks-audio": "1.0.1",
+    "@mediapipe/tasks-audio": "1.1.1",
     "@mediapipe/tasks-vision": "1.0.1",
     "onnxruntime-web": "1.30.0",
     "react": "19.3.0",
