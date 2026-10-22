@@ -37,7 +37,7 @@
       "dependencies": {
         "@m8/salience": "workspace:*",
         "@m8/shared": "workspace:*",
-        "@mediapipe/tasks-audio": "1.0.1",
+        "@mediapipe/tasks-audio": "1.1.1",
         "@mediapipe/tasks-vision": "1.0.1",
         "onnxruntime-web": "1.30.0",
         "react": "19.3.0",
@@ -155,7 +155,7 @@
 
     "@m8/web": ["@m8/web@workspace:apps/web"],
 
-    "@mediapipe/tasks-audio": ["@mediapipe/tasks-audio@1.0.1", "", {}, "sha512-znfNNj9p6sAfsmrK+mjpW5H2NdWEcyvebjIcxjM3onv5God5S//fT4wFZ76quYL9J9SSTi2EkdUCq2zjYbzK2w=="],
+    "@mediapipe/tasks-audio": ["@mediapipe/tasks-audio@1.1.1", "", {}, "sha512-y4Zny8Dwo7Cll68c+eq3wwoOylurA/dkeljtxrUnctbsrSf9JJ6H+GbQK/9KIZ2UMU0vJRTghM2+r4dFCNM3LQ=="],
 
     "@mediapipe/tasks-vision": ["@mediapipe/tasks-vision@1.0.1", "", {}, "sha512-rvRE2FmAZ6ZxKSw7wq+e+jQDpN3t1B/tD2mJz9SmAzb1msoDkd4dMoE4wAh8Z30Um0PQwLiHr9QtomhmXk3aUQ=="],
 
