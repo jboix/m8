@@ -38,7 +38,7 @@
         "@m8/salience": "workspace:*",
         "@m8/shared": "workspace:*",
         "@mediapipe/tasks-audio": "1.1.1",
-        "@mediapipe/tasks-vision": "1.1.1",
+        "@mediapipe/tasks-vision": "1.2.0",
         "onnxruntime-web": "1.31.1",
         "react": "19.3.1",
         "react-dom": "19.3.1",
@@ -157,7 +157,7 @@
 
     "@mediapipe/tasks-audio": ["@mediapipe/tasks-audio@1.1.1", "", {}, "sha512-y4Zny8Dwo7Cll68c+eq3wwoOylurA/dkeljtxrUnctbsrSf9JJ6H+GbQK/9KIZ2UMU0vJRTghM2+r4dFCNM3LQ=="],
 
-    "@mediapipe/tasks-vision": ["@mediapipe/tasks-vision@1.1.1", "", {}, "sha512-jwntgT5tzDrKOkqg6xNDNpRcTUnGvmylZE5DFnzPXossiWOIDdZX+C81LI75hlXhsG58YZW+lGzcmjH1qrQE/Q=="],
+    "@mediapipe/tasks-vision": ["@mediapipe/tasks-vision@1.2.0", "", {}, "sha512-7+dr9GbGyTtcuLh11wE5TOn4dNFRncIT9oAWs72620WX99KW5FfzF6rFJ/ChTgXG9vJ6dCiE9FrEEY4CnwPWKQ=="],
 
     "@napi-rs/wasm-runtime": ["@napi-rs/wasm-runtime@1.2.4", "", { "dependencies": { "@tybys/wasm-util": "^0.10.3" }, "peerDependencies": { "@emnapi/core": "^1.7.1 || ^2.0.0-alpha.4", "@emnapi/runtime": "^1.7.1 || ^2.0.0-alpha.4" } }, "sha512-AJxoUD2/15ESHbvpcyjU274nsAPLuOtPHCk0vKJM5pj//Fg/B1FXNWjPnXTT9PymCYYiHo4zPj0ZomXBKhoy7g=="],
 
